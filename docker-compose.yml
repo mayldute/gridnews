@@ -1,0 +1,57 @@
+services:
+  postgres-keycloak:
+    image: postgres:15
+    container_name: postgres-keycloak
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_keycloak_data:/var/lib/postgresql/data
+    networks:
+      - shared-network
+    ports:
+      - "127.0.0.1:5433:5432"
+
+  # postgres-app:
+  #   image: postgres:15
+  #   container_name: postgres-app
+  #   environment:
+  #     POSTGRES_DB: gridnews
+  #     POSTGRES_USER: aliaksandra
+  #     POSTGRES_PASSWORD: mazamauka
+  #   volumes:
+  #     - postgres_app_data:/var/lib/postgresql/data
+  #   networks:
+  #     - shared-network
+  #   ports:
+  #     - "127.0.0.1:5433:5432"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-keycloak:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+      KC_HOSTNAME: localhost
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - postgres-keycloak
+    networks:
+      - shared-network
+    command: start-dev
+
+networks:
+  shared-network:
+    driver: bridge
+
+volumes:
+  postgres_keycloak_data:
+    driver: local
+  postgres_app_data:
+    driver: local
