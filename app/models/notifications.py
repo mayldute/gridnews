@@ -11,7 +11,7 @@ from app.db.base import Base
 class Subscription(Base):
     __tablename__ = 'subscriptions'
 
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, index=True)
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     user_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey('users.id', ondelete='CASCADE'), nullable=False
     )
@@ -26,10 +26,10 @@ class Subscription(Base):
     series: Mapped['RacingSeries'] = relationship('RacingSeries', back_populates='subscriptions')
 
 
-class NotificationSetting(Base):
+class NotificationSettings(Base):
     __tablename__ = 'notifications'
 
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, index=True)
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     user_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey('users.id', ondelete='CASCADE'), nullable=False
     )

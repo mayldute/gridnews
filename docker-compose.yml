@@ -13,26 +13,12 @@ services:
     ports:
       - "127.0.0.1:5433:5432"
 
-  # postgres-app:
-  #   image: postgres:15
-  #   container_name: postgres-app
-  #   environment:
-  #     POSTGRES_DB: gridnews
-  #     POSTGRES_USER: aliaksandra
-  #     POSTGRES_PASSWORD: mazamauka
-  #   volumes:
-  #     - postgres_app_data:/var/lib/postgresql/data
-  #   networks:
-  #     - shared-network
-  #   ports:
-  #     - "127.0.0.1:5433:5432"
-
   keycloak:
     image: quay.io/keycloak/keycloak:26.0
     container_name: keycloak
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN: superuser
+      KEYCLOAK_ADMIN_PASSWORD: superuser
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres-keycloak:5432/keycloak
       KC_DB_USERNAME: keycloak

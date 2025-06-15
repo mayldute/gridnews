@@ -13,7 +13,7 @@ from app.models.enums import UserRoleEnum
 class User(Base):
     __tablename__ = 'users'
 
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, index=True)
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     avatar_url: Mapped[str] = mapped_column(String, nullable=False)

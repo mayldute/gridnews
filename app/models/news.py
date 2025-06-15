@@ -13,7 +13,7 @@ from app.models.enums import NewsTypeEnum
 class News(Base):
     __tablename__ = 'news'
 
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, index=True)
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     series_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey('series.id', ondelete='CASCADE'), nullable=False
     )
